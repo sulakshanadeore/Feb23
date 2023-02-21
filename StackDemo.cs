@@ -13,7 +13,26 @@ namespace CollectionsDemo
             // WorkingWithStackNonGeneric();
 
             //WorkingWithQueueNonGeneric();
+            
+            //
+    SortedList list = new SortedList();
+            list.Add(18, 100);
+            list.Add(81, 200);
+            list.Add(8, 500);
+            list.Add(1, 300);
+            list.Add(6, 600);
 
+
+            list.SetByIndex(2, 10);
+            list.Remove(8);
+            foreach (DictionaryEntry item in list)
+            {
+                Console.WriteLine(item.Key +  "   "  + item.Value  );
+            }          
+            
+            
+            
+//
             Hashtable h = new Hashtable();
             h.Add(1, 100);
             h.Add(2, 100);
