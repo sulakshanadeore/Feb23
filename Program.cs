@@ -2,6 +2,8 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
+using HRLibrary;
+using System.Runtime.Serialization.Formatters.Soap;
 
 namespace SerializationDemo
 {
@@ -69,12 +71,14 @@ namespace SerializationDemo
             fs.Dispose();
 
             Console.WriteLine("file created in binary format....");
+
+          
         }
 
 
         static void Main(string[] args)
         {
-            Console.WriteLine("enter 1 for Binaryserialize, 2 for Binarydeserialize, 3 for XML Serialze,  4 for XML Deserialize");
+            Console.WriteLine("enter 1 for Binaryserialize, 2 for Binarydeserialize, 3 for XML Serialze,  4 for XML Deserialize, 5 for Soap Serialize , 6 for Soap Deserialize  ");
             int choice = int.Parse(Console.ReadLine());
             Program p = new Program();
             switch (choice)
@@ -93,6 +97,29 @@ namespace SerializationDemo
                     break;
                 case 4:
                     p.XMLDeSerializeData();
+                    break;
+
+                case 5:
+                    HRLibrary.Employee emp = new HRLibrary.Employee();
+                    emp.Empid = 1;
+                    emp.EName = "Pradnya";
+                    emp.Deptno = 20;
+                    FileStream fs = new FileStream("soapdata1.soap", FileMode.Create, FileAccess.Write);
+                    SoapFormatter s = new SoapFormatter();
+                    s.Serialize(fs, emp);
+                    fs.Close();
+                    fs.Dispose();
+                    break;
+                case 6:
+                    fs = new FileStream("soapdata1.soap", FileMode.Open, FileAccess.Read);
+                    SoapFormatter s1 = new SoapFormatter();
+                    HRLibrary.Employee emp1 = (HRLibrary.Employee) s1.Deserialize(fs);
+                    Console.WriteLine(emp1.Empid);
+                    Console.WriteLine(emp1.EName);
+                    Console.WriteLine(emp1.Deptno);
+                    fs.Close();
+                    fs.Dispose();
+
                     break;
                 default:
                     break;
